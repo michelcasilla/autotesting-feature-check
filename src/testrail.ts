@@ -12,19 +12,25 @@ function getRunName(): string {
   return `Auto testing ${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`
 }
 
-function getTestRailConfg(path: string): AxiosRequestConfig {
+function getTestRailConfg(path: string, method?: string): AxiosRequestConfig {
   const host = core.getInput('testrail_host')
   const username = core.getInput('testrail_username')
   const password = core.getInput('testrail_password')
+  const token = Buffer.from(`${username}:${password}`, 'utf8').toString(
+    'base64'
+  )
   const config: AxiosRequestConfig = {
-    method: 'GET',
-    headers: {'Content-Type': 'application/json'},
-    url: `${host}/${path}`,
-    withCredentials: true,
-    auth: {
-      username,
-      password
-    }
+    method: method || 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Basic ${token}`
+    },
+    url: `${host}/${path}`
+    // withCredentials: true,
+    // auth: {
+    //   username,
+    //   password
+    // }
   }
   core.notice(JSON.stringify(config))
   return config
@@ -63,7 +69,7 @@ async function addRun(
   projectId: string,
   runInfo: {name: string; description: string; suite_id: string}
 ): Promise<GetRunResponse> {
-  const config = getTestRailConfg(`add_run/${projectId}`)
+  const config = getTestRailConfg(`add_run/${projectId}`, 'POST')
   config.data = runInfo
   const runResponse = await axios.request<GetRunResponse>(config)
   return runResponse.data
