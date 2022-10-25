@@ -111,18 +111,23 @@ function getRunName() {
     const date = new Date();
     return `Auto testing ${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`;
 }
-function getTestRailConfg(path) {
+function getTestRailConfg(path, method) {
     const host = core.getInput('testrail_host');
     const username = core.getInput('testrail_username');
     const password = core.getInput('testrail_password');
+    const token = Buffer.from(`${username}:${password}`, 'utf8').toString('base64');
     const config = {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        url: `${host}/${path}`,
-        auth: {
-            username,
-            password
-        }
+        method: method || 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Basic ${token}`
+        },
+        url: `${host}/${path}`
+        // withCredentials: true,
+        // auth: {
+        //   username,
+        //   password
+        // }
     };
     core.notice(JSON.stringify(config));
     return config;
@@ -158,7 +163,7 @@ function getRuns(projectId) {
 }
 function addRun(projectId, runInfo) {
     return __awaiter(this, void 0, void 0, function* () {
-        const config = getTestRailConfg(`add_run/${projectId}`);
+        const config = getTestRailConfg(`add_run/${projectId}`, 'POST');
         config.data = runInfo;
         const runResponse = yield axios_1.default.request(config);
         return runResponse.data;
