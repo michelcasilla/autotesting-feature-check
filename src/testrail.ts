@@ -20,6 +20,7 @@ function getTestRailConfg(path: string): AxiosRequestConfig {
     method: 'GET',
     headers: {'Content-Type': 'application/json'},
     url: `${host}/${path}`,
+    withCredentials: true,
     auth: {
       username,
       password
