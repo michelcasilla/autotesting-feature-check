@@ -56,7 +56,6 @@ function run() {
             core.notice(JSON.stringify(features));
         }
         catch (error) {
-            core.error('This is an error');
             if (error instanceof Error)
                 core.setFailed(error.message);
         }
@@ -105,8 +104,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getOrCreateRunID = void 0;
-const axios_1 = __importDefault(__nccwpck_require__(1441));
+/* eslint-disable sort-imports */
 const core = __importStar(__nccwpck_require__(2186));
+const axios_1 = __importDefault(__nccwpck_require__(1441));
 function getRunName() {
     const date = new Date();
     return `Auto testing ${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`;
@@ -124,6 +124,7 @@ function getTestRailConfg(path) {
             password
         }
     };
+    core.notice(JSON.stringify(config));
     return config;
 }
 function getOrCreateRunID() {
