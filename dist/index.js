@@ -133,10 +133,10 @@ function getOrCreateRunID() {
             const projectId = core.getInput('testrail_projectid');
             const response = yield getRuns(projectId);
             core.debug('GET THE LIST OF RUNs');
-            core.debug(JSON.stringify(response));
+            core.notice(JSON.stringify(response));
             const runName = getRunName();
             core.debug('Create the run name');
-            core.debug(runName);
+            core.debug(`Run name ${runName}`);
             let match = (response.runs || []).find(runInfo => runInfo.name.toLowerCase() === runName);
             core.debug('Creck if exist');
             core.debug(JSON.stringify(match));
