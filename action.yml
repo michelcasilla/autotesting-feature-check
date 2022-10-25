@@ -25,7 +25,7 @@ inputs:
     description: 'TestRail reporter password or api key this is generated in testrail dashboard'
   testrail_projectid:
     required: true
-    description: 'TestRail rprojectid'
+    description: 'TestRail projectid'
 runs:
   using: 'node16'
   main: 'dist/index.js'
