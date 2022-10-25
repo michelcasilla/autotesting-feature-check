@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
-import { getOrCreateRunID } from './testrail'
-import { getTouchedFiles } from './util'
+import {getOrCreateRunID} from './testrail'
+import {getTouchedFiles} from './util'
 
 async function run(): Promise<void> {
   try {
@@ -18,7 +18,6 @@ async function run(): Promise<void> {
     core.notice(`RUNID: ${runID}`)
     core.notice(JSON.stringify(features))
   } catch (error) {
-    core.error('This is an error')
     if (error instanceof Error) core.setFailed(error.message)
   }
 }

@@ -1,6 +1,6 @@
-import axios, {AxiosRequestConfig} from 'axios'
+/* eslint-disable sort-imports */
 import * as core from '@actions/core'
-
+import axios, {AxiosRequestConfig} from 'axios'
 import {
   GetRunResponse,
   Run,
@@ -25,6 +25,7 @@ function getTestRailConfg(path: string): AxiosRequestConfig {
       password
     }
   }
+  core.notice(JSON.stringify(config))
   return config
 }
 
