@@ -55,7 +55,7 @@ export async function getOrCreateRunID(): Promise<Run | undefined> {
     const projectId = core.getInput('testrail_projectid')
     const response = await getRuns(projectId)
     core.notice('GET THE LIST OF RUNs')
-    core.notice(JSON.stringify(response))
+    core.debug(JSON.stringify(response))
     const runName = getRunName()
     core.notice('Create the run name')
     core.notice(`Run name ${runName}`)
