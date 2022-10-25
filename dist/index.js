@@ -115,19 +115,21 @@ function getTestRailConfg(path, method) {
     const host = core.getInput('testrail_host');
     const username = core.getInput('testrail_username');
     const password = core.getInput('testrail_password');
-    const token = Buffer.from(`${username}:${password}`, 'utf8').toString('base64');
+    // const token = Buffer.from(`${username}:${password}`, 'utf8').toString(
+    //   'base64'
+    // )
     const config = {
         method: method || 'GET',
         headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Basic ${token}`
+            'Content-Type': 'application/json'
+            // Authorization: `Basic ${token}`
         },
-        url: `${host}/${path}`
-        // withCredentials: true,
-        // auth: {
-        //   username,
-        //   password
-        // }
+        url: `${host}/${path}`,
+        withCredentials: true,
+        auth: {
+            username,
+            password
+        }
     };
     core.notice(JSON.stringify(config));
     return config;
